@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="flex container rounded ">
+    <div class="flex container rounded shadow-md">
       <div class="img-container">
         <img :src="`/images/iphone${name}.jpg`"  />
       </div>
@@ -30,7 +30,6 @@ main {
   padding: 1em;
 }
 .container {
-    box-shadow: 1px 1px 10px black;
     max-width: 30em;
     height: 25em;
     background-color: white;

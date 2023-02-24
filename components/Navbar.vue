@@ -2,6 +2,7 @@
   <nav class="bg-purple-900 text-white shadow-lg p-3 flex justify-evenly">
     <NuxtLink to="/">Home</NuxtLink>
     <NuxtLink to="/about">About</NuxtLink>
+    <NuxtLink to="/login">Login</NuxtLink>
     <NuxtLink to="/iphone">Iphone</NuxtLink>
     <NuxtLink to="/profile">Profile</NuxtLink>
     <p>Cart({{ cart.length }})</p>
