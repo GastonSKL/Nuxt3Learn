@@ -2,10 +2,11 @@
   <main>
     <div class="flex container rounded shadow-md">
       <div class="img-container">
-        <img :src="`/images/iphone${name}.jpg`" />
+        <img :src="productSelected.image" />
       </div>
       <div class="description-container">
-        <h3>Iphone {{ name }}</h3>
+        <h3>{{ productSelected.title }}</h3>
+        <p>{{ productSelected.price }}$</p>
         <button @click="addCart()" class="bg-purple-900 text-white rounded">
           <span v-if="!buyed">Buy now</span>
           <span v-else>Remove</span>
@@ -21,6 +22,18 @@ main {
   place-content: center;
   height: 90vh;
 }
+
+h3{
+  text-align: center;
+  font-size: .8em;
+  color: rgb(129, 129, 129);
+}
+
+p{
+  font-size: .8em;
+  color: rgb(129, 129, 129);
+  margin-bottom: 4em;
+}
 .description-container {
   display: flex;
   flex-direction: column;
@@ -30,7 +43,7 @@ main {
   padding: 1em;
 }
 .container {
-  max-width: 30em;
+  width: 30em;
   height: 25em;
   background-color: white;
 }
@@ -62,17 +75,31 @@ main {
 
 <script setup>
 const route = useRoute();
+const productId = useIdProducto();
+const productSelected = ref({});
 const cart = useCart();
 const buyed = ref(false);
-const name = computed(() => {
-  return route.params.name;
-});
+
+
+
+const getProducts = async (url) => {
+  const response = await useFetch(url);
+  productSelected.value = response.data.value;
+  console.log(response.data);
+};
+
+onMounted(() => {
+  const url = `https://fakestoreapi.com/products/${productId.value}`;
+  getProducts(url);
+  
+})
+  
 
 const addCart = () => {
   const found = cart.value.find((e) => e.name === name.value);
   if (!found && buyed.value == false) {
     cart.value.push({
-      name: `${name.value}`,
+      name: `${productSelected.value.id}`,
     });
     buyed.value = true;
   } else {

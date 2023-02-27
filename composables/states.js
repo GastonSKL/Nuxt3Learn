@@ -4,3 +4,5 @@ export const useAuth = () =>
   useState(() => ({
     isAuthenticated: false,
   }));
+
+export const useIdProducto = () => useState(()=>null);
