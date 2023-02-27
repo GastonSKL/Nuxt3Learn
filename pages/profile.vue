@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <h1>Profile</h1>
-  </div>
+  <ProfileCard/>
 </template>
 
 <script setup>
+
 useHead({
   title: `Profile`,
 });

@@ -6,3 +6,6 @@ export const useAuth = () =>
   }));
 
 export const useIdProducto = () => useState(()=>null);
+
+export const useUser = () => useState(()=>null);
+

@@ -51,6 +51,7 @@
 </template>
 
 <script setup>
+const user = useUser();
 const email = ref("");
 const auth = useAuth();
 const errorMsg = ref(null);
@@ -71,7 +72,7 @@ const onSubmit = async () => {
       method: "post",
       body: form,
     });
-
+    
     isLoading.value = false;
 
     if (error.value) {
@@ -79,6 +80,7 @@ const onSubmit = async () => {
       return;
     }
 
+    user.value = email.value;
     auth.value.isAuthenticated = true;
     navigateTo("/");
   }
