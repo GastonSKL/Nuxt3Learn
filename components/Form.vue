@@ -31,15 +31,18 @@
             type="password"
             placeholder="******************"
           />
-          <p class="text-red-500 text-xs italic">Please choose a password.</p>
+          <p class="text-red-500 text-xs italic" v-if="errorMsg">
+            {{ errorMsg }}
+          </p>
         </div>
         <div class="flex items-center justify-between">
           <button
-            class="bg-purple-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-purple-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
             type="button"
             @click.prevent="onSubmit"
           >
-            Sign In
+            <span v-if="isLoading">Loading...</span>
+            <span v-else>Sign In</span>
           </button>
         </div>
       </form>
@@ -49,29 +52,35 @@
 
 <script setup>
 const email = ref("");
+const auth = useAuth();
+const errorMsg = ref(null);
 const password = ref("");
 const isLoading = ref(false);
 const url = "https://reqres.in/api/login";
-const  onSubmit = async() => {
-    if (isLoading.value){
-        return
-    }else{
+const onSubmit = async () => {
+  if (isLoading.value) {
+    return;
+  } else {
+    isLoading.value = true;
 
-        isLoading.value = true;
-        
-          const form = {
-            email: email.value,
-            password: password.value,
-          };
-          const {data, error} = await useFetch(url, {
-            method: "post",
-            body: form,
-          });
-        
-          isLoading.value = false;
-        
-          console.log(data.value, error)
+    const form = {
+      email: email.value,
+      password: password.value,
+    };
+    const { data, error } = await useFetch(url, {
+      method: "post",
+      body: form,
+    });
+
+    isLoading.value = false;
+
+    if (error.value) {
+      errorMsg.value = error.value.data.error;
+      return;
     }
 
+    auth.value.isAuthenticated = true;
+    navigateTo("/");
+  }
 };
 </script>

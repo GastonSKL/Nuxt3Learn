@@ -2,7 +2,7 @@
   <main>
     <div class="flex container rounded shadow-md">
       <div class="img-container">
-        <img :src="`/images/iphone${name}.jpg`"  />
+        <img :src="`/images/iphone${name}.jpg`" />
       </div>
       <div class="description-container">
         <h3>Iphone {{ name }}</h3>
@@ -30,9 +30,9 @@ main {
   padding: 1em;
 }
 .container {
-    max-width: 30em;
-    height: 25em;
-    background-color: white;
+  max-width: 30em;
+  height: 25em;
+  background-color: white;
 }
 .description-container h3 {
   margin-bottom: 1em;
@@ -55,8 +55,8 @@ main {
   align-content: center;
   justify-content: center;
 }
-.img-container img{
-    border-radius: .4em;
+.img-container img {
+  border-radius: 0.4em;
 }
 </style>
 
@@ -69,21 +69,25 @@ const name = computed(() => {
 });
 
 const addCart = () => {
-    const found = cart.value.find((e)=> e.name === name.value);
-    if(!found && buyed.value == false){
-        cart.value.push({
-          name: `${name.value}`,
-        });
-        buyed.value = true;
-    }else{
-      cart.value = cart.value.filter((e)=> e.name !== name.value)
-      buyed.value = false;
-    }
+  const found = cart.value.find((e) => e.name === name.value);
+  if (!found && buyed.value == false) {
+    cart.value.push({
+      name: `${name.value}`,
+    });
+    buyed.value = true;
+  } else {
+    cart.value = cart.value.filter((e) => e.name !== name.value);
+    buyed.value = false;
+  }
   console.log(cart.value);
   console.log(cart.value.length);
 };
 
 useHead({
   title: `Iphone  ${name.value}`,
+});
+
+definePageMeta({
+  middleware: ["auth"],
 });
 </script>
